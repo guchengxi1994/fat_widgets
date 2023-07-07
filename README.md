@@ -19,7 +19,7 @@ Widgets in  [`flutter_admin_template`](https://github.com/guchengxi1994/flutter_
 
   | ![](./images/sidemenu_1.gif)                                 | ![](./images/sidemenu_2.gif)                                |
   | ------------------------------------------------------------ | ----------------------------------------------------------- |
-  | [side menu with a custom clipper](example\lib\sidemenus\custom_clipper.dart) | [resizable side menu](example\lib\sidemenus\resizable.dart) |
+  | [side menu with a custom clipper](example/lib/sidemenus/custom_clipper.dart) | [resizable side menu](example/lib/sidemenus/resizable.dart) |
 
 * 
 
@@ -27,9 +27,9 @@ Widgets in  [`flutter_admin_template`](https://github.com/guchengxi1994/flutter_
 
 ```yaml
 dependencies:
-	fat_widgets:
-		git:
-			url: https://github.com/guchengxi1994/fat_widgets
+  fat_widgets:
+    git:
+      url: https://github.com/guchengxi1994/fat_widgets
 ```
 
 
