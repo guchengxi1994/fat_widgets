@@ -1,7 +1,7 @@
 name: fat_widgets
 description: A new Flutter package project.
-version: 0.0.1
-homepage:
+version: 0.0.2
+homepage: https://github.com/guchengxi1994/fat_widgets
 
 environment:
   sdk: '>=3.0.5 <4.0.0'

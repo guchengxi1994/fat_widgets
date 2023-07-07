@@ -1,5 +1,7 @@
-import 'package:fat_widgets/fat_widgets.dart';
+import 'package:fat_widgets_example/sidemenus/resizable.dart';
 import 'package:flutter/material.dart';
+
+import 'sidemenus/custom_clipper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,53 +14,59 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: const HomePage(),
+      routes: Routers.routers,
     );
   }
 }
 
+class Routers {
+  static String customClipperSidemenu = "/customClipperSidemenu";
+  static String customResiableSidemenu = "/customResiableSidemenu";
+
+  static Map<String, WidgetBuilder> routers = {
+    customClipperSidemenu: (context) => const CustomClipperSidemenu(),
+    customResiableSidemenu: (context) => CustomResizableSidemenu(),
+  };
+}
+
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SingleLevelSidemenu<BaseSidemenuData>(
-            height: MediaQuery.of(context).size.height,
-            items: List.generate(
-                5,
-                (index) => BaseSidemenuData(
-                    height: 60,
-                    width: 280,
-                    index: index,
-                    onItemClicked: (p0) {
-                      print(p0);
-                    },
-                    title: Text(index.toString()))).toList(),
-            width: 300,
-          )
+          const Text(
+            "Sidemenus",
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          _wrapper(Routers.customClipperSidemenu, context),
+          _wrapper(Routers.customResiableSidemenu, context),
         ],
+      ),
+    );
+  }
+
+  Widget _wrapper(String text, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 30),
+      child: Card(
+        child: ListTile(
+          onTap: () {
+            Navigator.of(context).pushNamed(text);
+          },
+          trailing: const Icon(Icons.navigation),
+          title: Text(text),
+        ),
       ),
     );
   }

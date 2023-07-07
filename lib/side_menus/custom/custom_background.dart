@@ -16,7 +16,7 @@ class CustomBackground extends CustomClipper<Path> {
     path.lineTo(size.width, offsetOnVertical);
     final (p2x, p2y) = (size.width, offsetOnVertical + indicatorSize);
     final (p1x, p1y) = (
-      size.width - 30,
+      size.width - indicatorSize,
       (offsetOnVertical + indicatorSize + offsetOnVertical) / 2
     );
     path.quadraticBezierTo(p1x, p1y, p2x, p2y);
@@ -28,7 +28,7 @@ class CustomBackground extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(covariant CustomClipper oldClipper) {
-    return true;
+  bool shouldReclip(covariant CustomBackground oldClipper) {
+    return oldClipper != this;
   }
 }

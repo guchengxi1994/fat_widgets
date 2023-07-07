@@ -12,6 +12,7 @@ class BaseSidemenuData {
   final Widget title;
   final Widget? leading;
   final OnItemClicked onItemClicked;
+  final EdgeInsets padding;
 
   BaseSidemenuData(
       {required this.height,
@@ -21,7 +22,8 @@ class BaseSidemenuData {
       this.selectedColor = Colors.blue,
       required this.title,
       this.leading,
-      required this.onItemClicked});
+      required this.onItemClicked,
+      this.padding = EdgeInsets.zero});
 
   Widget toWidget(ValueNotifier<int> valueNotifier) {
     return BaseSidemenuItem(data: this, valueNotifier: valueNotifier);
@@ -37,7 +39,7 @@ class BaseSidemenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 10, right: 25),
+      padding: const EdgeInsets.only(left: 10, right: 25, top: 5, bottom: 5),
       width: data.width,
       height: data.height,
       child: ListTile(
@@ -45,8 +47,11 @@ class BaseSidemenuItem extends StatelessWidget {
             ? data.selectedColor
             : Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        contentPadding: EdgeInsets.zero,
-        title: data.title,
+        contentPadding: data.padding,
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: data.title,
+        ),
         leading: data.leading,
         hoverColor: data.onHoverColor,
         // selectedColor: data.selectedColor,

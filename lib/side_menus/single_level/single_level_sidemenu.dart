@@ -10,7 +10,8 @@ class SingleLevelSidemenu<T extends BaseSidemenuData> extends StatefulWidget {
       required this.height,
       required this.items,
       this.marginTop = 0,
-      this.header})
+      this.header,
+      this.indicatorSize = 30})
       : super(key: key) {
     assert(items.isNotEmpty, "items must not be empty");
     if (header != null) {
@@ -24,6 +25,7 @@ class SingleLevelSidemenu<T extends BaseSidemenuData> extends StatefulWidget {
   final List<T> items;
   final double marginTop;
   final ConstrainedBox? header;
+  final double indicatorSize;
 
   @override
   State<SingleLevelSidemenu> createState() => _SingleLevelSidemenuState();
@@ -46,12 +48,14 @@ class _SingleLevelSidemenuState extends State<SingleLevelSidemenu> {
     return ValueListenableBuilder(
       valueListenable: valueNotifier,
       builder: (c, i, w) {
-        final initial = header.constraints.maxHeight +
+        final initial = widget.marginTop +
+            header.constraints.maxHeight +
             widget.items.first.height / 2 - /* indicatorSize */
-            30.0 / 2;
+            widget.indicatorSize / 2;
 
         return ClipPath(
           clipper: CustomBackground(
+            indicatorSize: widget.indicatorSize,
             offsetOnVertical:
                 (widget.items.first.height * valueNotifier.value + initial),
           ),

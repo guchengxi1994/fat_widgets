@@ -11,29 +11,35 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Widgets in  [`flutter_admin_template`](https://github.com/guchengxi1994/flutter_admin_template)
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* side menus
+
+  | ![](./images/sidemenu_1.gif)                                 | ![](./images/sidemenu_2.gif)                                |
+  | ------------------------------------------------------------ | ----------------------------------------------------------- |
+  | [side menu with a custom clipper](example\lib\sidemenus\custom_clipper.dart) | [resizable side menu](example\lib\sidemenus\resizable.dart) |
+
+* 
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+```yaml
+dependencies:
+	fat_widgets:
+		git:
+			url: https://github.com/guchengxi1994/fat_widgets
+```
+
+
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+TODO
 
-```dart
-const like = 'sample';
-```
+
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Enjoy coding.
