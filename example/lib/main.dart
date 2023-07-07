@@ -1,6 +1,7 @@
 import 'package:fat_widgets_example/sidemenus/resizable.dart';
 import 'package:flutter/material.dart';
 
+import 'sidemenus/animated.dart';
 import 'sidemenus/custom_clipper.dart';
 
 void main() {
@@ -29,10 +30,12 @@ class MyApp extends StatelessWidget {
 class Routers {
   static String customClipperSidemenu = "/customClipperSidemenu";
   static String customResiableSidemenu = "/customResiableSidemenu";
+  static String animatedSidemenu = "/animatedSidemenu";
 
   static Map<String, WidgetBuilder> routers = {
     customClipperSidemenu: (context) => const CustomClipperSidemenu(),
     customResiableSidemenu: (context) => CustomResizableSidemenu(),
+    animatedSidemenu: (context) => const AnimatedClipperSidemenu()
   };
 }
 
@@ -51,12 +54,14 @@ class HomePage extends StatelessWidget {
           ),
           _wrapper(Routers.customClipperSidemenu, context),
           _wrapper(Routers.customResiableSidemenu, context),
+          _wrapper(Routers.animatedSidemenu, context),
         ],
       ),
     );
   }
 
   Widget _wrapper(String text, BuildContext context) {
+    final t = text.replaceAll("/", "");
     return Padding(
       padding: const EdgeInsets.only(left: 30),
       child: Card(
@@ -65,7 +70,7 @@ class HomePage extends StatelessWidget {
             Navigator.of(context).pushNamed(text);
           },
           trailing: const Icon(Icons.navigation),
-          title: Text(text),
+          title: Text(t),
         ),
       ),
     );
