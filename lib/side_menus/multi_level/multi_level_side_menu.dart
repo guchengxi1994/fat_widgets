@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'expand_collapse_notifier.dart';
 
 typedef OnDestinationSelected = Function(int);
+typedef OnExpansionChanged = Function(bool);
 
 class MultiLevelSideMenu extends StatefulWidget {
-  MultiLevelSideMenu(
+  const MultiLevelSideMenu(
       {super.key,
       required this.destinations,
       required this.onDestinationSelected,
@@ -15,25 +16,8 @@ class MultiLevelSideMenu extends StatefulWidget {
       this.leading,
       this.maxWidth = 200,
       this.minWidth = 75,
-      this.decoration}) {
-    /* for test 
-       destinations length cannot less than 2
-    */
-    if (destinations.length < 2) {
-      destinations.addAll([
-        const NavigationRailDestination(
-          icon: Icon(Icons.abc),
-          selectedIcon: Icon(Icons.abc),
-          label: Text('Abc'),
-        ),
-        const NavigationRailDestination(
-          icon: Icon(Icons.abc),
-          selectedIcon: Icon(Icons.abc),
-          label: Text('Abc'),
-        ),
-      ]);
-    }
-  }
+      this.decoration,
+      this.onExpansionChanged});
   final List<NavigationRailDestination> destinations;
   final OnDestinationSelected onDestinationSelected;
   final int initialIndex;
@@ -43,6 +27,7 @@ class MultiLevelSideMenu extends StatefulWidget {
   final double minWidth;
   final double maxWidth;
   final BoxDecoration? decoration;
+  final OnExpansionChanged? onExpansionChanged;
 
   @override
   State<MultiLevelSideMenu> createState() => MultiLevelSideMenuState();
@@ -91,6 +76,10 @@ class MultiLevelSideMenuState extends State<MultiLevelSideMenu> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.destinations.length < 2) {
+      return widget.body;
+    }
+
     return Stack(
       children: [
         Row(
@@ -123,7 +112,10 @@ class MultiLevelSideMenuState extends State<MultiLevelSideMenu> {
               cursor: SystemMouseCursors.resizeLeft,
               child: GestureDetector(
                 onPanUpdate: (details) {
-                  notifier.changeSidemenuWidth(details);
+                  final b = notifier.changeSidemenuWidth(details);
+                  if (widget.onExpansionChanged != null) {
+                    widget.onExpansionChanged!(b);
+                  }
                 },
                 child: Container(
                   color: Colors.transparent,

@@ -9,7 +9,7 @@ class ExpandCollapseNotifier extends ChangeNotifier {
 
   late double currentWidth = minWidth;
 
-  changeSidemenuWidth(DragUpdateDetails details) {
+  bool changeSidemenuWidth(DragUpdateDetails details) {
     currentWidth = currentWidth + details.delta.dx;
     if (currentWidth >= maxWidth) {
       isExpanded = true;
@@ -22,7 +22,6 @@ class ExpandCollapseNotifier extends ChangeNotifier {
       currentWidth = minWidth;
       notifyListeners();
     }
-
-    // notifyListeners();
+    return isExpanded;
   }
 }
