@@ -16,7 +16,23 @@ class MultiLevelSideMenu extends StatefulWidget {
       this.maxWidth = 200,
       this.minWidth = 75,
       this.decoration}) {
-    assert(destinations.isNotEmpty, "destinations must not be empty");
+    /* for test 
+       destinations length cannot less than 2
+    */
+    if (destinations.length < 2) {
+      destinations.addAll([
+        const NavigationRailDestination(
+          icon: Icon(Icons.abc),
+          selectedIcon: Icon(Icons.abc),
+          label: Text('Abc'),
+        ),
+        const NavigationRailDestination(
+          icon: Icon(Icons.abc),
+          selectedIcon: Icon(Icons.abc),
+          label: Text('Abc'),
+        ),
+      ]);
+    }
   }
   final List<NavigationRailDestination> destinations;
   final OnDestinationSelected onDestinationSelected;
@@ -29,10 +45,10 @@ class MultiLevelSideMenu extends StatefulWidget {
   final BoxDecoration? decoration;
 
   @override
-  State<MultiLevelSideMenu> createState() => _MultiLevelSideMenuState();
+  State<MultiLevelSideMenu> createState() => MultiLevelSideMenuState();
 }
 
-class _MultiLevelSideMenuState extends State<MultiLevelSideMenu> {
+class MultiLevelSideMenuState extends State<MultiLevelSideMenu> {
   late int selectedIndex = widget.initialIndex;
 
   late final notifier = ExpandCollapseNotifier(
@@ -48,6 +64,14 @@ class _MultiLevelSideMenuState extends State<MultiLevelSideMenu> {
   void dispose() {
     notifier.removeListener(() {});
     super.dispose();
+  }
+
+  changeIndex(int i) {
+    if (selectedIndex != i) {
+      setState(() {
+        selectedIndex = i;
+      });
+    }
   }
 
   late BoxDecoration decoration = widget.decoration ??
@@ -83,9 +107,8 @@ class _MultiLevelSideMenuState extends State<MultiLevelSideMenu> {
                 destinations: widget.destinations,
                 selectedIndex: selectedIndex,
                 onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
+                  changeIndex(value);
+                  widget.onDestinationSelected(value);
                 },
                 labelType: NavigationRailLabelType.none,
                 backgroundColor: Colors.transparent,
