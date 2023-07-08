@@ -40,7 +40,7 @@ class BaseSidemenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 10, right: 25, top: 5, bottom: 5),
-      width: data.width,
+      // width: data.width,
       height: data.height,
       child: ListTile(
         tileColor: valueNotifier.value == data.index

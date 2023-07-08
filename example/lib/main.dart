@@ -1,3 +1,4 @@
+import 'package:fat_widgets_example/sidemenus/multi_level.dart';
 import 'package:fat_widgets_example/sidemenus/resizable.dart';
 import 'package:flutter/material.dart';
 
@@ -31,11 +32,13 @@ class Routers {
   static String customClipperSidemenu = "/customClipperSidemenu";
   static String customResiableSidemenu = "/customResiableSidemenu";
   static String animatedSidemenu = "/animatedSidemenu";
+  static String multiLevel = "/multiLevel";
 
   static Map<String, WidgetBuilder> routers = {
     customClipperSidemenu: (context) => const CustomClipperSidemenu(),
     customResiableSidemenu: (context) => CustomResizableSidemenu(),
-    animatedSidemenu: (context) => const AnimatedClipperSidemenu()
+    animatedSidemenu: (context) => const AnimatedClipperSidemenu(),
+    multiLevel: (context) => MultilevelSidemenu()
   };
 }
 
@@ -55,6 +58,7 @@ class HomePage extends StatelessWidget {
           _wrapper(Routers.customClipperSidemenu, context),
           _wrapper(Routers.customResiableSidemenu, context),
           _wrapper(Routers.animatedSidemenu, context),
+          _wrapper(Routers.multiLevel, context),
         ],
       ),
     );

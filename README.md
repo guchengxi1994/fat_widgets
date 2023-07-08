@@ -20,8 +20,8 @@ Widgets in  [`flutter_admin_template`](https://github.com/guchengxi1994/flutter_
   | ![](./images/sidemenu_1.gif)                                 | ![](./images/sidemenu_2.gif)                                |
   | ------------------------------------------------------------ | ----------------------------------------------------------- |
   | [side menu with a custom clipper](example/lib/sidemenus/custom_clipper.dart) | [resizable side menu](example/lib/sidemenus/resizable.dart) |
-  | ![](./images/sidemenu_3.gif)                                 |                                                             |
-  | [animated side menu](example/lib/sidemenus/animated.dart)    |                                                             |
+  | ![](./images/sidemenu_3.gif)                                 | ![](./images/sidemenu_4.gif)                                |
+  | [animated side menu](example/lib/sidemenus/animated.dart)    | [multi-level](example/lib/sidemenus/multi_level.dart)       |
 
 * 
 
