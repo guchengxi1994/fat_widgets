@@ -31,7 +31,8 @@ class MultiLevelSideMenu extends StatefulWidget {
       this.maxWidth = 200,
       this.minWidth = 75,
       this.decoration,
-      this.onExpansionChanged});
+      this.onExpansionChanged,
+      this.trailing});
   final List<NavigationRailDestination> destinations;
   final OnDestinationSelected onDestinationSelected;
   final int initialIndex;
@@ -42,6 +43,7 @@ class MultiLevelSideMenu extends StatefulWidget {
   final double maxWidth;
   final BoxDecoration? decoration;
   final OnExpansionChanged? onExpansionChanged;
+  final Widget? trailing;
 
   @override
   State<MultiLevelSideMenu> createState() => MultiLevelSideMenuState();
@@ -95,28 +97,13 @@ class MultiLevelSideMenuState extends State<MultiLevelSideMenu>
     }
   }
 
-  late BoxDecoration decoration = widget.decoration ??
-      const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(15), bottomRight: Radius.circular(15)),
-        color: Colors.blueAccent,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5,
-            spreadRadius: 0.0,
-            offset: Offset(5, 0), // shadow direction: bottom right
-          )
-        ],
-      );
-
   @override
   Widget build(BuildContext context) {
     if (widget.destinations.isEmpty) {
       return Row(
         children: [
           Container(
-            decoration: decoration,
+            decoration: widget.decoration,
           ),
           const Expanded(child: SizedBox()),
         ],
@@ -133,7 +120,7 @@ class MultiLevelSideMenuState extends State<MultiLevelSideMenu>
                     reclip: _animation,
                   ),
                   child: Container(
-                    decoration: decoration,
+                    decoration: widget.decoration,
                     width: isExpanded ? widget.maxWidth : widget.minWidth,
                     height: MediaQuery.of(context).size.height,
                     child: Column(
@@ -218,7 +205,7 @@ class MultiLevelSideMenuState extends State<MultiLevelSideMenu>
         Row(
           children: [
             Container(
-              decoration: decoration,
+              decoration: widget.decoration,
               child: NavigationRail(
                 // selectedIconTheme: const IconThemeData(color: Colors.white),
                 unselectedIconTheme: const IconThemeData(color: Colors.black),
@@ -234,6 +221,14 @@ class MultiLevelSideMenuState extends State<MultiLevelSideMenu>
                 },
                 labelType: NavigationRailLabelType.none,
                 backgroundColor: Colors.transparent,
+                trailing: Expanded(
+                    child: Container(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: widget.trailing,
+                  ),
+                )),
               ),
             ),
             Expanded(child: widget.body),

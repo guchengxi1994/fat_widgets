@@ -37,10 +37,10 @@ class AnimatedSingleLevelSidemenu<T extends BaseSidemenuData>
 
 class _AnimatedSingleLevelSidemenuState
     extends State<AnimatedSingleLevelSidemenu> with TickerProviderStateMixin {
-  late final decoration = widget.decoration ??
-      BoxDecoration(
-          color: Colors.lightBlue.withAlpha(75),
-          borderRadius: BorderRadius.circular(15));
+  // late final decoration = widget.decoration ??
+  //     BoxDecoration(
+  //         color: Colors.lightBlue.withAlpha(75),
+  //         borderRadius: BorderRadius.circular(15));
   ValueNotifier<int> valueNotifier = ValueNotifier(0);
 
   late ConstrainedBox header = widget.header ??
@@ -99,7 +99,7 @@ class _AnimatedSingleLevelSidemenuState
             reclip: _animation,
           ),
           child: Container(
-              decoration: decoration,
+              decoration: widget.decoration,
               width: widget.width,
               height: widget.height,
               child: Column(
