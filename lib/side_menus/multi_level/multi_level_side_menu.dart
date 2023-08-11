@@ -32,7 +32,8 @@ class MultiLevelSideMenu extends StatefulWidget {
       this.minWidth = 75,
       this.decoration,
       this.onExpansionChanged,
-      this.trailing});
+      this.trailing,
+      this.errWidget});
   final List<NavigationRailDestination> destinations;
   final OnDestinationSelected onDestinationSelected;
   final int initialIndex;
@@ -44,6 +45,7 @@ class MultiLevelSideMenu extends StatefulWidget {
   final BoxDecoration? decoration;
   final OnExpansionChanged? onExpansionChanged;
   final Widget? trailing;
+  final Widget? errWidget;
 
   @override
   State<MultiLevelSideMenu> createState() => MultiLevelSideMenuState();
@@ -103,9 +105,24 @@ class MultiLevelSideMenuState extends State<MultiLevelSideMenu>
       return Row(
         children: [
           Container(
+            width: 200,
             decoration: widget.decoration,
+            child: Column(
+              children: [
+                const Expanded(child: SizedBox()),
+                widget.trailing ?? const SizedBox(),
+                const SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
           ),
-          const Expanded(child: SizedBox()),
+          Expanded(
+              child: SizedBox(
+            child: Center(
+              child: widget.errWidget ?? const Text("Oops, something is wrong"),
+            ),
+          )),
         ],
       );
     }
