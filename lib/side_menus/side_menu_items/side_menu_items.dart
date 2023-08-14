@@ -10,7 +10,9 @@ class BaseSidemenuData {
   final Color onHoverColor;
   final Color selectedColor;
   final Widget title;
+  final Widget? titleOnSelected;
   final Widget? leading;
+  final Widget? leadingOnSelected;
   final OnItemClicked onItemClicked;
   final EdgeInsets padding;
 
@@ -23,7 +25,9 @@ class BaseSidemenuData {
       required this.title,
       this.leading,
       required this.onItemClicked,
-      this.padding = EdgeInsets.zero});
+      this.padding = EdgeInsets.zero,
+      this.leadingOnSelected,
+      this.titleOnSelected});
 
   Widget toWidget(ValueNotifier<int> valueNotifier) {
     return BaseSidemenuItem(data: this, valueNotifier: valueNotifier);
@@ -50,9 +54,13 @@ class BaseSidemenuItem extends StatelessWidget {
         contentPadding: data.padding,
         title: Align(
           alignment: Alignment.centerLeft,
-          child: data.title,
+          child: valueNotifier.value == data.index
+              ? (data.titleOnSelected ?? data.title)
+              : data.title,
         ),
-        leading: data.leading,
+        leading: valueNotifier.value == data.index
+            ? data.leadingOnSelected
+            : data.leading,
         hoverColor: data.onHoverColor,
         // selectedColor: data.selectedColor,
         onTap: () {
