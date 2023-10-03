@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'column_item.dart';
 import 'columns.dart';
+import 'table_status.dart';
+// ignore: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 
 // ignore: must_be_immutable
 class CustomDatatable extends StatefulWidget {
@@ -29,9 +32,11 @@ class CustomDatatable extends StatefulWidget {
 }
 
 class _CustomDatatableState extends State<CustomDatatable> {
-  late ValueNotifier<SelectStatus> selectStatus = widget.showCheckbox
-      ? ValueNotifier(SelectStatus.zero)
-      : ValueNotifier(SelectStatus.none);
+  late ValueNotifier<TableStatus> selectStatus = widget.showCheckbox
+      ? ValueNotifier(TableStatus(
+          selectStatus: SelectStatus.zero, rowLength: widget.rows.length))
+      : ValueNotifier(TableStatus(
+          selectStatus: SelectStatus.none, rowLength: widget.rows.length));
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +50,11 @@ class _CustomDatatableState extends State<CustomDatatable> {
               status: selectStatus,
             ),
             ...widget.rows
-                .map((e) =>
-                    DataTableRow(dataCells: e.dataCells, status: selectStatus))
+                .mapIndexed((i, e) => DataTableRow(
+                      dataCells: e.dataCells,
+                      status: selectStatus.value,
+                      index: i,
+                    ))
                 .toList()
           ],
         );

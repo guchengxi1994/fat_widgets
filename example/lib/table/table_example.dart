@@ -2,6 +2,7 @@ import 'package:fat_widgets/table/column_item.dart';
 import 'package:fat_widgets/table/columns.dart';
 import 'package:fat_widgets/table/custom_data_table.dart';
 import 'package:fat_widgets/table/rows.dart';
+import 'package:fat_widgets/table/table_status.dart';
 import 'package:flutter/material.dart';
 
 class TableExample extends StatefulWidget {
@@ -24,7 +25,7 @@ class _TableExampleState extends State<TableExample> {
             },
           ),
           DataTableColumn(
-            status: ValueNotifier(SelectStatus.none),
+            status: ValueNotifier(TableStatus()),
             columns: [
               ColumnItem(
                 label: const Text("test"),
@@ -35,7 +36,7 @@ class _TableExampleState extends State<TableExample> {
             ],
           ),
           DataTableColumn(
-            status: ValueNotifier(SelectStatus.all),
+            status: ValueNotifier(TableStatus(selectStatus: SelectStatus.all)),
             columns: [
               ColumnItem(
                 label: const Text("test"),
@@ -47,7 +48,7 @@ class _TableExampleState extends State<TableExample> {
           ),
           DataTableColumn(
             circle: true,
-            status: ValueNotifier(SelectStatus.some),
+            status: ValueNotifier(TableStatus(selectStatus: SelectStatus.some)),
             columns: [
               ColumnItem(
                 label: const Text("test"),
