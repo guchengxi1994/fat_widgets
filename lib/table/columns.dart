@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'column_item.dart';
 import 'table_status.dart';
+// ignore: depend_on_referenced_packages
+import 'package:collection/collection.dart';
 
 // ignore: must_be_immutable
 class DataTableColumn extends StatelessWidget {
@@ -10,13 +12,17 @@ class DataTableColumn extends StatelessWidget {
       required this.columns,
       this.decoration,
       this.circle = false,
-      required this.status})
+      required this.status,
+      required this.columnWidth,
+      this.columnHeight = 50})
       : assert(columns.isNotEmpty),
         super(key: key);
   final List<ColumnItem> columns;
   final BoxDecoration? decoration;
   ValueNotifier<TableStatus> status;
   final bool circle;
+  final List<double?> columnWidth;
+  final double columnHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +50,7 @@ class DataTableColumn extends StatelessWidget {
           }
 
           return Container(
+            height: columnHeight,
             decoration: decoration,
             child: Row(
               children: [
@@ -70,14 +77,37 @@ class DataTableColumn extends StatelessWidget {
                       }
                     },
                     child: SizedBox(
+                      height: columnHeight,
                       width: 40,
                       child: icon,
                     ),
                   ),
-                ...columns
+                ...wrapper()
               ],
             ),
           );
         });
+  }
+
+  List<Widget> wrapper() {
+    return columns
+        .mapIndexed((i, e) => columnWidth[i] == null
+            ? Expanded(
+                child: SizedBox(
+                height: columnHeight,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: e,
+                ),
+              ))
+            : SizedBox(
+                width: columnWidth[i],
+                height: columnHeight,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: e,
+                ),
+              ))
+        .toList();
   }
 }

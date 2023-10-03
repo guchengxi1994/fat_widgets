@@ -25,6 +25,7 @@ class _TableExampleState extends State<TableExample> {
             },
           ),
           DataTableColumn(
+            columnWidth: [50.0],
             status: ValueNotifier(TableStatus()),
             columns: [
               ColumnItem(
@@ -36,6 +37,7 @@ class _TableExampleState extends State<TableExample> {
             ],
           ),
           DataTableColumn(
+            columnWidth: [50.0],
             status: ValueNotifier(TableStatus(selectStatus: SelectStatus.all)),
             columns: [
               ColumnItem(
@@ -47,6 +49,7 @@ class _TableExampleState extends State<TableExample> {
             ],
           ),
           DataTableColumn(
+            columnWidth: [50.0],
             circle: true,
             status: ValueNotifier(TableStatus(selectStatus: SelectStatus.some)),
             columns: [
@@ -59,6 +62,8 @@ class _TableExampleState extends State<TableExample> {
           const Divider(),
           Expanded(
               child: CustomDatatable(
+            columnHeight: 50,
+            rowHeight: 30,
             circle: true,
             showCheckbox: true,
             columns: [

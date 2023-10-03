@@ -16,7 +16,9 @@ class CustomDatatable extends StatefulWidget {
       this.circle = false,
       this.columnDecoration,
       this.showCheckbox = false,
-      required this.rows})
+      required this.rows,
+      this.columnHeight = 50,
+      this.rowHeight = 50})
       : super(key: key) {
     columnWidth ??= List.filled(columns.length, null);
   }
@@ -26,6 +28,8 @@ class CustomDatatable extends StatefulWidget {
   final BoxDecoration? columnDecoration;
   final bool showCheckbox;
   final List<CustomTableRow> rows;
+  final double columnHeight;
+  final double rowHeight;
 
   @override
   State<CustomDatatable> createState() => _CustomDatatableState();
@@ -45,16 +49,19 @@ class _CustomDatatableState extends State<CustomDatatable> {
         return Column(
           children: [
             DataTableColumn(
+              columnHeight: widget.columnHeight,
               decoration: widget.columnDecoration,
               columns: widget.columns,
               status: selectStatus,
+              columnWidth: widget.columnWidth!,
             ),
             ...widget.rows
                 .mapIndexed((i, e) => DataTableRow(
-                      dataCells: e.dataCells,
-                      status: selectStatus.value,
-                      index: i,
-                    ))
+                    rowHeight: widget.rowHeight,
+                    dataCells: e.dataCells,
+                    status: selectStatus,
+                    index: i,
+                    columnWidth: widget.columnWidth!))
                 .toList()
           ],
         );
