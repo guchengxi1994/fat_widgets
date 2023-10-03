@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'sidemenus/animated.dart';
 import 'sidemenus/custom_clipper.dart';
+import 'table/table_example.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,13 +36,15 @@ class Routers {
   static String animatedSidemenu = "/animatedSidemenu";
   static String multiLevel = "/multiLevel";
   static String multiLevel2 = "/multiLevel2";
+  static String tableTest = "/tableTest";
 
   static Map<String, WidgetBuilder> routers = {
     customClipperSidemenu: (context) => const CustomClipperSidemenu(),
     customResiableSidemenu: (context) => CustomResizableSidemenu(),
     animatedSidemenu: (context) => const AnimatedClipperSidemenu(),
     multiLevel: (context) => MultilevelSidemenu(),
-    multiLevel2: (context) => MultilevelSingleDestinationSidemenu()
+    multiLevel2: (context) => MultilevelSingleDestinationSidemenu(),
+    tableTest: (context) => const TableExample(),
   };
 }
 
@@ -63,6 +66,11 @@ class HomePage extends StatelessWidget {
           _wrapper(Routers.animatedSidemenu, context),
           _wrapper(Routers.multiLevel, context),
           _wrapper(Routers.multiLevel2, context),
+          const Text(
+            "table",
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          _wrapper(Routers.tableTest, context),
         ],
       ),
     );
