@@ -48,9 +48,22 @@ class DataTableColumn extends StatelessWidget {
             child: Row(
               children: [
                 if (showIcon)
-                  SizedBox(
-                    width: 40,
-                    child: icon,
+                  InkWell(
+                    onTap: () {
+                      if (status.value == SelectStatus.all) {
+                        status.value = SelectStatus.zero;
+                        return;
+                      }
+                      if (status.value == SelectStatus.some ||
+                          status.value == SelectStatus.zero) {
+                        status.value = SelectStatus.all;
+                        return;
+                      }
+                    },
+                    child: SizedBox(
+                      width: 40,
+                      child: icon,
+                    ),
                   ),
                 ...columns
               ],

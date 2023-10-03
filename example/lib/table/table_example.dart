@@ -1,5 +1,7 @@
 import 'package:fat_widgets/table/column_item.dart';
 import 'package:fat_widgets/table/columns.dart';
+import 'package:fat_widgets/table/custom_data_table.dart';
+import 'package:fat_widgets/table/rows.dart';
 import 'package:flutter/material.dart';
 
 class TableExample extends StatefulWidget {
@@ -52,7 +54,23 @@ class _TableExampleState extends State<TableExample> {
                 onSort: null,
               )
             ],
-          )
+          ),
+          const Divider(),
+          Expanded(
+              child: CustomDatatable(
+            circle: true,
+            showCheckbox: true,
+            columns: [
+              ColumnItem(
+                label: const Text("test"),
+                onSort: null,
+              )
+            ],
+            rows: [
+              CustomTableRow(dataCells: [const Text("table item1")]),
+              CustomTableRow(dataCells: [const Text("table item2")])
+            ],
+          ))
         ],
       ),
     );
