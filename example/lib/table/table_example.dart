@@ -13,6 +13,13 @@ class TableExample extends StatefulWidget {
 }
 
 class _TableExampleState extends State<TableExample> {
+  late List<CustomTableRow> rows = [
+    CustomTableRow(
+        dataCells: [const Text("table item1"), const Text("table item  r1")]),
+    CustomTableRow(
+        dataCells: [const Text("table item2"), const Text("table item  r2")])
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +69,13 @@ class _TableExampleState extends State<TableExample> {
           const Divider(),
           Expanded(
               child: CustomDatatable(
+            columnWidth: [200, null],
+            onSelectedAllStatusChanged: (rows) {
+              print(rows);
+            },
+            onSingleRowSelectedChanged: (index) {
+              print(index);
+            },
             columnHeight: 50,
             rowHeight: 30,
             circle: true,
@@ -70,12 +84,17 @@ class _TableExampleState extends State<TableExample> {
               ColumnItem(
                 label: const Text("test"),
                 onSort: null,
+              ),
+              ColumnItem(
+                label: const Text("test2"),
+                onSort: (b) {
+                  setState(() {
+                    rows = rows.reversed.toList();
+                  });
+                },
               )
             ],
-            rows: [
-              CustomTableRow(dataCells: [const Text("table item1")]),
-              CustomTableRow(dataCells: [const Text("table item2")])
-            ],
+            rows: rows,
           ))
         ],
       ),

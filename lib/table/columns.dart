@@ -5,6 +5,8 @@ import 'table_status.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 
+typedef OnSelectedAllStatusChanged = void Function(List<int> rows);
+
 // ignore: must_be_immutable
 class DataTableColumn extends StatelessWidget {
   DataTableColumn(
@@ -14,7 +16,8 @@ class DataTableColumn extends StatelessWidget {
       this.circle = false,
       required this.status,
       required this.columnWidth,
-      this.columnHeight = 50})
+      this.columnHeight = 50,
+      this.onSelectedAllStatusChanged})
       : assert(columns.isNotEmpty),
         super(key: key);
   final List<ColumnItem> columns;
@@ -23,6 +26,7 @@ class DataTableColumn extends StatelessWidget {
   final bool circle;
   final List<double?> columnWidth;
   final double columnHeight;
+  final OnSelectedAllStatusChanged? onSelectedAllStatusChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -63,16 +67,24 @@ class DataTableColumn extends StatelessWidget {
                             selectStatus: SelectStatus.zero,
                             selectedIndexes: [],
                             rowLength: status.value.rowLength);
+                        if (onSelectedAllStatusChanged != null) {
+                          onSelectedAllStatusChanged!([]);
+                        }
+
                         return;
                       }
                       if (status.value.selectStatus == SelectStatus.some ||
                           status.value.selectStatus == SelectStatus.zero) {
                         // status.value.selectStatus = SelectStatus.all;
+                        final rows = List.generate(
+                            status.value.rowLength, (index) => index);
                         status.value = TableStatus(
                             selectStatus: SelectStatus.all,
-                            selectedIndexes: List.generate(
-                                status.value.rowLength, (index) => index),
+                            selectedIndexes: rows,
                             rowLength: status.value.rowLength);
+                        if (onSelectedAllStatusChanged != null) {
+                          onSelectedAllStatusChanged!(rows);
+                        }
                         return;
                       }
                     },

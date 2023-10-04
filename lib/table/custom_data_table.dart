@@ -18,9 +18,16 @@ class CustomDatatable extends StatefulWidget {
       this.showCheckbox = false,
       required this.rows,
       this.columnHeight = 50,
-      this.rowHeight = 50})
+      this.rowHeight = 50,
+      this.ifEmpty = const Text("No Data"),
+      this.onSingleRowSelectedChanged,
+      this.onSelectedAllStatusChanged})
       : super(key: key) {
     columnWidth ??= List.filled(columns.length, null);
+    assert(columnWidth!.length == columns.length);
+    if (rows.isNotEmpty) {
+      assert(rows.first.dataCells.length == columns.length);
+    }
   }
   List<double?>? columnWidth;
   final List<ColumnItem> columns;
@@ -30,6 +37,9 @@ class CustomDatatable extends StatefulWidget {
   final List<CustomTableRow> rows;
   final double columnHeight;
   final double rowHeight;
+  final Widget ifEmpty;
+  final OnSingleRowSelectedStatusChanged? onSingleRowSelectedChanged;
+  final OnSelectedAllStatusChanged? onSelectedAllStatusChanged;
 
   @override
   State<CustomDatatable> createState() => _CustomDatatableState();
@@ -49,14 +59,28 @@ class _CustomDatatableState extends State<CustomDatatable> {
         return Column(
           children: [
             DataTableColumn(
+              onSelectedAllStatusChanged: (rows) {
+                if (widget.onSelectedAllStatusChanged != null) {
+                  widget.onSelectedAllStatusChanged!(rows);
+                }
+              },
               columnHeight: widget.columnHeight,
               decoration: widget.columnDecoration,
               columns: widget.columns,
               status: selectStatus,
               columnWidth: widget.columnWidth!,
             ),
+            if (widget.rows.isEmpty)
+              Center(
+                child: widget.ifEmpty,
+              ),
             ...widget.rows
                 .mapIndexed((i, e) => DataTableRow(
+                    onSingleRowSelectedChanged: (index) {
+                      if (widget.onSingleRowSelectedChanged != null) {
+                        widget.onSingleRowSelectedChanged!(index);
+                      }
+                    },
                     rowHeight: widget.rowHeight,
                     dataCells: e.dataCells,
                     status: selectStatus,

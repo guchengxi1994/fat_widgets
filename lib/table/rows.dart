@@ -3,11 +3,16 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
 
+typedef OnSingleRowSelectedStatusChanged = void Function(int index);
+
 class CustomTableRow {
   final List<Widget> dataCells;
   final BoxDecoration? decoration;
 
-  CustomTableRow({required this.dataCells, this.decoration});
+  CustomTableRow({
+    required this.dataCells,
+    this.decoration,
+  });
 }
 
 // ignore: must_be_immutable
@@ -20,7 +25,8 @@ class DataTableRow extends StatelessWidget {
       this.circle = false,
       required this.index,
       required this.columnWidth,
-      this.rowHeight = 50})
+      this.rowHeight = 50,
+      this.onSingleRowSelectedChanged})
       : super(key: key);
   final List<Widget> dataCells;
   final BoxDecoration? decoration;
@@ -29,6 +35,7 @@ class DataTableRow extends StatelessWidget {
   final int index;
   final List<double?> columnWidth;
   final double rowHeight;
+  final OnSingleRowSelectedStatusChanged? onSingleRowSelectedChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +68,11 @@ class DataTableRow extends StatelessWidget {
               onTap: () {
                 // selected.value = !selected.value;
                 List<int> l = List.from(status.value.selectedIndexes);
-                print(l);
                 if (l.contains(index)) {
                   l.remove(index);
                 } else {
                   l.add(index);
                 }
-                print(l);
                 final SelectStatus selectStatus;
                 if (l.length == status.value.rowLength) {
                   selectStatus = SelectStatus.all;
@@ -81,6 +86,10 @@ class DataTableRow extends StatelessWidget {
                     selectStatus: selectStatus,
                     rowLength: status.value.rowLength,
                     selectedIndexes: l);
+
+                if (onSingleRowSelectedChanged != null) {
+                  onSingleRowSelectedChanged!(index);
+                }
               },
               child: SizedBox(
                 width: 40,
