@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:fat_widgets/table/column_item.dart';
 import 'package:fat_widgets/table/columns.dart';
 import 'package:fat_widgets/table/custom_data_table.dart';
@@ -32,7 +34,7 @@ class _TableExampleState extends State<TableExample> {
             },
           ),
           DataTableColumn(
-            columnWidth: [50.0],
+            columnWidth: const [50.0],
             status: ValueNotifier(TableStatus()),
             columns: [
               ColumnItem(
@@ -44,7 +46,7 @@ class _TableExampleState extends State<TableExample> {
             ],
           ),
           DataTableColumn(
-            columnWidth: [50.0],
+            columnWidth: const [50.0],
             status: ValueNotifier(TableStatus(selectStatus: SelectStatus.all)),
             columns: [
               ColumnItem(
@@ -56,7 +58,7 @@ class _TableExampleState extends State<TableExample> {
             ],
           ),
           DataTableColumn(
-            columnWidth: [50.0],
+            columnWidth: const [50.0],
             circle: true,
             status: ValueNotifier(TableStatus(selectStatus: SelectStatus.some)),
             columns: [
@@ -69,7 +71,7 @@ class _TableExampleState extends State<TableExample> {
           const Divider(),
           Expanded(
               child: CustomDatatable(
-            columnWidth: [200, null],
+            columnWidth: const [200, null],
             onSelectedAllStatusChanged: (rows) {
               print(rows);
             },
