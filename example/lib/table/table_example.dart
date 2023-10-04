@@ -22,6 +22,17 @@ class _TableExampleState extends State<TableExample> {
         dataCells: [const Text("table item2"), const Text("table item  r2")])
   ];
 
+  late List<CustomTableRow> rows2 = [
+    CustomTableRow(dataCells: [
+      const Text("2 -- table item1"),
+      const Text("2 -- table item  r1")
+    ]),
+    CustomTableRow(dataCells: [
+      const Text("2 -- table item2"),
+      const Text("2 -- table item  r2")
+    ])
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +72,9 @@ class _TableExampleState extends State<TableExample> {
             columnWidth: const [50.0],
             circle: true,
             status: ValueNotifier(TableStatus(selectStatus: SelectStatus.some)),
-            columns: [
+            columns: const [
               ColumnItem(
-                label: const Text("test"),
+                label: Text("test"),
                 onSort: null,
               )
             ],
@@ -83,8 +94,8 @@ class _TableExampleState extends State<TableExample> {
             circle: true,
             showCheckbox: true,
             columns: [
-              ColumnItem(
-                label: const Text("test"),
+              const ColumnItem(
+                label: Text("test"),
                 onSort: null,
               ),
               ColumnItem(
@@ -97,6 +108,38 @@ class _TableExampleState extends State<TableExample> {
               )
             ],
             rows: rows,
+          )),
+          Expanded(
+              child: CustomDatatable(
+            columnDecoration: BoxDecoration(
+                border: Border.all(width: 0.5, color: Colors.blueAccent),
+                borderRadius: BorderRadius.circular(15)),
+            columnWidth: const [200, null],
+            onSelectedAllStatusChanged: (rows) {
+              print(rows);
+            },
+            onSingleRowSelectedChanged: (index) {
+              print(index);
+            },
+            columnHeight: 50,
+            rowHeight: 30,
+            circle: true,
+            showCheckbox: true,
+            columns: [
+              const ColumnItem(
+                label: Text("2 -- test"),
+                onSort: null,
+              ),
+              ColumnItem(
+                label: const Text("2 -- test2"),
+                onSort: (b) {
+                  setState(() {
+                    rows2 = rows2.reversed.toList();
+                  });
+                },
+              )
+            ],
+            rows: rows2,
           ))
         ],
       ),

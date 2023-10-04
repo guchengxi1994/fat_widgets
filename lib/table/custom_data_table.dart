@@ -54,43 +54,48 @@ class _CustomDatatableState extends State<CustomDatatable> {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      builder: (BuildContext context, value, Widget? child) {
-        return Column(
-          children: [
-            DataTableColumn(
-              onSelectedAllStatusChanged: (rows) {
-                if (widget.onSelectedAllStatusChanged != null) {
-                  widget.onSelectedAllStatusChanged!(rows);
-                }
-              },
-              columnHeight: widget.columnHeight,
-              decoration: widget.columnDecoration,
-              columns: widget.columns,
-              status: selectStatus,
-              columnWidth: widget.columnWidth!,
-            ),
-            if (widget.rows.isEmpty)
-              Center(
-                child: widget.ifEmpty,
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ValueListenableBuilder(
+        builder: (BuildContext context, value, Widget? child) {
+          return Column(
+            children: [
+              DataTableColumn(
+                onSelectedAllStatusChanged: (rows) {
+                  if (widget.onSelectedAllStatusChanged != null) {
+                    widget.onSelectedAllStatusChanged!(rows);
+                  }
+                },
+                columnHeight: widget.columnHeight,
+                decoration: widget.columnDecoration,
+                columns: widget.columns,
+                status: selectStatus,
+                columnWidth: widget.columnWidth!,
               ),
-            ...widget.rows
-                .mapIndexed((i, e) => DataTableRow(
-                    onSingleRowSelectedChanged: (index) {
-                      if (widget.onSingleRowSelectedChanged != null) {
-                        widget.onSingleRowSelectedChanged!(index);
-                      }
-                    },
-                    rowHeight: widget.rowHeight,
-                    dataCells: e.dataCells,
-                    status: selectStatus,
-                    index: i,
-                    columnWidth: widget.columnWidth!))
-                .toList()
-          ],
-        );
-      },
-      valueListenable: selectStatus,
+              if (widget.rows.isEmpty)
+                Center(
+                  child: widget.ifEmpty,
+                ),
+              ...widget.rows
+                  .mapIndexed((i, e) => DataTableRow(
+                      decoration: e.decoration,
+                      rowRadius: e.rowRadius,
+                      onSingleRowSelectedChanged: (index) {
+                        if (widget.onSingleRowSelectedChanged != null) {
+                          widget.onSingleRowSelectedChanged!(index);
+                        }
+                      },
+                      rowHeight: widget.rowHeight,
+                      dataCells: e.dataCells,
+                      status: selectStatus,
+                      index: i,
+                      columnWidth: widget.columnWidth!))
+                  .toList()
+            ],
+          );
+        },
+        valueListenable: selectStatus,
+      ),
     );
   }
 }
